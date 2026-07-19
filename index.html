@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Cartograph — Blocky Navigator</title>
+<meta name="description" content="A turn-by-turn navigation map skinned like a Minecraft map item." />
+<meta name="theme-color" content="#5c3d21" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Cartograph" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="frame">
+    <!-- torn parchment map surface -->
+    <div id="map"></div>
+    <div id="pixelOverlay"></div>
+    <div id="vignette"></div>
+    <div id="crosshair" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="26" height="26">
+        <line x1="12" y1="2" x2="12" y2="22" stroke="#f6c6de" stroke-width="2"/>
+        <line x1="2" y1="12" x2="22" y2="12" stroke="#f6c6de" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <!-- top bar: search sign -->
+    <header id="topbar">
+      <button id="menuBtn" class="mc-btn icon-btn" aria-label="Menu">☰</button>
+      <form id="searchForm" autocomplete="off">
+        <input id="searchInput" type="text" placeholder="Where ya headed?" />
+      </form>
+      <button id="locateBtn" class="mc-btn icon-btn" aria-label="Find me">◎</button>
+    </header>
+
+    <!-- results list -->
+    <ul id="results" class="hidden"></ul>
+
+    <!-- extras row -->
+    <div id="extrasRow">
+      <button id="dropWaypointBtn" class="mc-btn icon-btn" title="Drop a marker here">📍</button>
+      <button id="waypointsBtn" class="mc-btn icon-btn" title="Your markers">📜</button>
+      <button id="themeBtn" class="mc-btn icon-btn" title="Switch dimension">🌍</button>
+      <button id="shareBtn" class="mc-btn icon-btn" title="Copy coordinates">⎘</button>
+    </div>
+
+    <!-- waypoints panel -->
+    <ul id="waypointsList" class="hidden"></ul>
+
+    <!-- route info card -->
+    <div id="routeCard" class="hidden">
+      <div class="card-row">
+        <span id="routeDist">--</span>
+        <span id="routeTime">--</span>
+        <button id="closeRoute" class="mc-btn small">✕</button>
+      </div>
+      <div id="routeSteps"></div>
+    </div>
+
+    <!-- zoom + travel-mode controls -->
+    <div id="controls">
+      <div id="travelModes">
+        <button class="mc-btn mode active" data-mode="foot" title="Walk">🚶</button>
+        <button class="mc-btn mode" data-mode="bike" title="Cart">🐴</button>
+        <button class="mc-btn mode" data-mode="driving" title="Minecart">🛒</button>
+      </div>
+      <div id="zoomBtns">
+        <button id="zoomIn" class="mc-btn icon-btn">+</button>
+        <button id="zoomOut" class="mc-btn icon-btn">-</button>
+      </div>
+    </div>
+
+    <!-- coordinate readout, minecraft F3-style -->
+    <div id="coordReadout">XYZ: --, --, --</div>
+
+    <!-- install banner -->
+    <div id="installBanner" class="hidden">
+      <span>Craft this into an app on your device</span>
+      <button id="installBtn" class="mc-btn small">Install</button>
+      <button id="dismissInstall" class="mc-btn small">✕</button>
+    </div>
+
+    <div id="attribution">© OpenStreetMap contributors, © CARTO</div>
+
+    <div id="loading" class="hidden">Loading chunks…</div>
+  </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
